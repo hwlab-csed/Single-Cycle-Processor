@@ -34,4 +34,3 @@ We can find the dataadr and writedata using the testbench
 |20620004  |
 |00641020  |
 |ac02000a  |
-|   <details><summary>Answer</summary><pre>writedata=52 dataadr=10</pre></details> |   <details><summary>Answer</summary><pre>writedata=80 dataadr=37</pre></details>| <details><summary>Answer</summary><pre>writedata=11 dataadr=84</pre></details>|
