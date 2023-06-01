@@ -5,7 +5,7 @@
 
 #### Single Cycle: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/SingleCycleV1.v
 
-#### Testbenches for instructions:-
+#### Testbenches for instructions: -
 
 Add: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_add.v
 
