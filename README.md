@@ -1,6 +1,6 @@
 # Single-Cycle-Processor
 
-### This repository contains one code for the Single Cycle Processor and subsequent testbenches to test each instruction individually.
+### This repository contains one code for the Single Cycle Processor and subsequent testbenches to test each instruction individually
 
 
 #### Single Cycle: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/SingleCycleV1.v
