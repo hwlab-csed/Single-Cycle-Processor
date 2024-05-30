@@ -3,7 +3,7 @@
 ### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and a sample modification question to add new instruction.
 
 
-#### Single Cycle: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/SingleCycleV1.v
+#### Single Cycle: [Main Code](https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/SingleCycleV1.v)
 
 #### Testbenches for instructions: -
 
