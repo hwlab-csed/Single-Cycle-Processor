@@ -1,11 +1,16 @@
-# Sample Modification Question
+# Sample Modification Question 1 - jr
 ## Question
 Modify the given code of the 32 bits single cycle MIPS processor to include jr instruction according to the following conventions:
 
 ![jr instruction format](image-1.png)
 > jr instruction format
 
+<details>
+<summary>
+	
 ## Solution
+</summary>
+	
 ### Instruction
 - The Jump Register instruction causes the PC to jump to the contents stored in the first source register `rs`. 
 - It is an R-type instruction. 
@@ -146,3 +151,6 @@ No changes.
 
 **11. alu module**<br>
 No changes since no alu operation is to be done for jr instruction.
+
+
+</details>
