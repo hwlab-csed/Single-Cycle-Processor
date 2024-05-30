@@ -14,5 +14,8 @@
 4. Load Word: [tb_lw.v](Sample%20Codes/tb_lw.v)
 5. Store Word: [tb_sw.v](Sample%20Codes/tb_sw.v)
 
-## Sample Modification
-1. Modify to include jr instruction: [jr](Modification/jr/README.md)
+## Sample Modification:
+1. Include jr instruction: [Click here to view](Modification/jr/README.md)
+
+## Sample Assignment Qn:
+1. Assignment3 : [Click here to view](Assignment3/Questions.md)
