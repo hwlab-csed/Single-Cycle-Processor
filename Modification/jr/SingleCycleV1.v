@@ -24,7 +24,7 @@ module dmem (input clk, we,input [31:0] a, wd,output [31:0] rd);
 endmodule
 
 
-//imem: no change
+//imem: change file path appropriately
 module imem (input [5:0] a,output [31:0] rd);
 	reg [31:0] RAM[63:0];
 	integer i;
