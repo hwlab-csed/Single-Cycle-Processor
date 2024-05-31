@@ -1,19 +1,21 @@
 # Single-Cycle-Processor
 
-### This repository contains one code for the Single Cycle Processor and subsequent testbenches to test each instruction individually
+### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and a sample modification question to add new instruction.
 
 
-#### Single Cycle: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/SingleCycleV1.v
+## Single Cycle: 
+[Main Code](Sample%20Codes/SingleCycleV1.v)
 
-#### Testbenches for instructions: -
+## Testbenches for instructions: 
 
-Add: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_add.v
+1. Add: [tb_add.v](Sample%20Codes/tb_add.v)
+2. Subtract: [tb_sub.v](Sample%20Codes/tb_sub.v)
+3. Branch if Equal: [tb_beq.v](Sample%20Codes/tb_beq.v)
+4. Load Word: [tb_lw.v](Sample%20Codes/tb_lw.v)
+5. Store Word: [tb_sw.v](Sample%20Codes/tb_sw.v)
 
-Subtract: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_sub.v
+## Sample Modification:
+1. Include jr instruction: [Click here to view](Modification/jr/README.md)
 
-Branch if Equal: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_beq.v
-
-Load Word: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_lw.v
-
-Store Word: https://github.com/hwlab-csed/Single-Cycle-Processor/blob/main/Sample%20Codes/tb_sw.v
-
+## Sample Assignment Qn:
+1. Assignment3 : [Click here to view](Assignment3/Questions.md)
