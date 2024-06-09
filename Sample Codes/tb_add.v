@@ -1,8 +1,13 @@
-//addi $2,$0, 450 
-//addi $3,$0, 550 
-//add $4,$2, $3 
-//sw $4, 20($0) 
+//addi $2,$0, 450  //initialise $2 =450
+//addi $3,$0, 550  //initialise $3 =550
+//add $4,$2, $3    //$4=$2+$3 ,$4=450+550=1000
+//sw $4, 20($0)    //write address 20 = 1000
 
+// Machine code
+//  200201c2
+//  20030226
+//  00432020
+//  ac040014
 
 module testbenchv1;
     reg clk;
