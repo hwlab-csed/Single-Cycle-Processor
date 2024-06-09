@@ -15,6 +15,7 @@ The best way to check if the single cycle code correctly implements an instructi
 3. Branch if Equal: [tb_beq.v](Sample%20Codes/tb_beq.v)
 4. Load Word: [tb_lw.v](Sample%20Codes/tb_lw.v)
 5. Store Word: [tb_sw.v](Sample%20Codes/tb_sw.v)
+- [Video Explanation](https://www.youtube.com/watch?v=_pPCv_fkO1w)
 
 ## Modification Questions:
 1. Modify the given Single Cycle Processor code to include the Jr (Jump Register) instruction.
