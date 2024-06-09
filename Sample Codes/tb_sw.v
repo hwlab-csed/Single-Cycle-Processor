@@ -1,5 +1,9 @@
-//addi $2,$0,25    
-//sw   $2, 30($0)
+//addi $2,$0,25  //initialise $2 =25
+//sw $2, 30($0)  //write address 30 = 25
+
+// Machine code
+//  20020019
+//  ac02001e
 
 module testbenchv1;
 	reg clk;
