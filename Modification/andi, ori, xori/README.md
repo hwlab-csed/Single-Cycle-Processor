@@ -14,5 +14,5 @@ Modify the [given code](../../Sample%20Codes/SingleCycle.v) to implement andi, x
 |                |`xori $4, $4, 11`              |
 |                |`sw  $4 20($0)`                |
 
-## Solution
+## Code Solution
 - [SingleCycleV1.v](SingleCycleV1.v)
