@@ -1,12 +1,19 @@
-main:
-  addi $2,$0,20          
-  addi $3,$0,30           
-  addi $5,$0,0            
-  beq  $5,$0,end         
-  add  $5,$2,$3           
-end:
-  sw   $5, 20($0)          
+// main:
+//   addi $2,$0,20  //initialise $2=20   
+//   addi $3,$0,30  //initialise $3=30
+//   addi $5,$0,0   //initialise $5=0         
+//   beq $5,$0,end  //if val($5)==val($0) branch to ‘end’      
+//   add $5,$2,$3   //$5=$2+$3          
+// end:
+//   sw $5, 20($0)  //write address 20 = 0
 
+ // Machine code
+ //  20020014
+ //  2003001e
+ //  20050000
+ //  10a00002
+ //  00432820
+ //  ac050014
 
 module testbenchv1;
 	reg clk;
