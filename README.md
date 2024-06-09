@@ -1,6 +1,6 @@
 # Single Cycle Processor
 
-### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and 3 types of questions on the topic.
+### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and 3 questions on the topic.
 
 
 ## Single Cycle Code: 
@@ -23,7 +23,7 @@ The best way to check if the single cycle code correctly implements an instructi
    - [Video Explanation](https://www.youtube.com/watch?v=YdMKU0FelT4&list=PLJGMNIXnU1SLUNfqTxjIEp-oW4wWtr5Mc&index=10)
      
 2. Modify the given Single Cycle Processor code to include the ANDI, ORI and XORI instructions.
-   - [Link to Question & Solution](Modification/jr/README.md)
+   - [Link to Question & Solution](Modification/andi,ori,xori/README.md)
 
 ## Sample Assignment Questions:
 1. Assignment3 : [Click here to view](Assignment3/Questions.md)
