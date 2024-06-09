@@ -7,7 +7,7 @@
 [Main Code](Sample%20Codes/SingleCycleV1.v)
 
 ## Testbenches for Instructions: 
-The best way to check if the single cycle code correctly implements an instruction is to update the instruction memory (ie. machine code) to use that particular operation before storing the result at a particular location in the data memory. Then, by using the testbench to cross-check the value stored at that address with the correct result of the instruction, we can determine if the instruction has executed properly. If it has, the program will print 'Simulation succeeded'.
+The best way to check if the single cycle code correctly implements an instruction is to update the instruction memory (ie. machine code) to use that particular operation before storing the result at a particular location in the data memory. Then, we use the testbench to cross-check the value stored at that address with the expected result of the instruction. If they match, the instruction has executed properly and the program will print 'Simulation succeeded'.
 
 
 1. Add: [tb_add.v](Sample%20Codes/tb_add.v)
