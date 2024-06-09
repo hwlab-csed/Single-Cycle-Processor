@@ -1,6 +1,6 @@
-# Single-Cycle-Processor
+# Single Cycle Processor
 
-### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and a sample modification question to add new instruction.
+### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and 3 types of questions on the topic along with their solutions and testbenches. 
 
 
 ## Single Cycle: 
