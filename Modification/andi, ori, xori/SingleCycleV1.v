@@ -1,6 +1,7 @@
 `define ALULEN  31
 //`include "memfile.dat"
 
+//top module: no change
 module SingleCycleV1 (input clk, reset,output [31:0] writedata, dataadr,output memwrite);
 	wire [31:0] pc, instr, readdata;
 	// instantiate processor and memories
@@ -10,6 +11,7 @@ module SingleCycleV1 (input clk, reset,output [31:0] writedata, dataadr,output m
 endmodule
 
 
+//dmem: no change
 module dmem (input clk, we,input [31:0] a, wd,output [31:0] rd);
 	reg [31:0] RAM[63:0];
 	assign rd = RAM[a[31:2]]; // word aligned
@@ -19,7 +21,7 @@ module dmem (input clk, we,input [31:0] a, wd,output [31:0] rd);
 endmodule
 
 
-
+//imem: change to the appropriate file directory
 module imem (input [5:0] a,output [31:0] rd);
 	reg [31:0] RAM[63:0];
 	integer i;
@@ -31,6 +33,7 @@ module imem (input [5:0] a,output [31:0] rd);
 endmodule
 
 
+//mips: no change
 module  mips(input clk, reset,
 				output [31:0] pc,
 				input [31:0] instr,	
@@ -46,7 +49,7 @@ module  mips(input clk, reset,
 
 endmodule
 
-
+//controller: op to be included as input for aludec
 module controller (input [5:0] op, funct,
 						input zero,
 						output memtoreg, memwrite,
@@ -63,6 +66,7 @@ module controller (input [5:0] op, funct,
 endmodule
 
 
+//maindec: add the cases for andi, ori and xori based on their codes
 module maindec(input [5:0] op,
 				output memtoreg, memwrite,
 				output branch, alusrc,
@@ -88,7 +92,7 @@ module maindec(input [5:0] op,
 endmodule
 
 	
-
+//aludec: opcode to be included as input for the I-type instructions
 module aludec (input [5:0] op, input [5:0] funct,
 					input [1:0] aluop,
 					output reg [2:0] alucontrol);
@@ -114,8 +118,7 @@ module aludec (input [5:0] op, input [5:0] funct,
 endmodule
 
 
-
-
+//datapath: no change
 module datapath (input clk, reset,
 						input memtoreg, pcsrc,
 						input alusrc, regdst,
@@ -153,8 +156,7 @@ module datapath (input clk, reset,
 endmodule
 
 
-
-
+//reg file: no change
 module regfile (input clk,
 					input we3,
 					input [4:0] ra1, ra2, wa3,
@@ -173,20 +175,18 @@ module regfile (input clk,
 endmodule
 
 
-
-
-module adder (input [31:0] a, b,output [31:0] y);
+//supplementary modules: no changes
+module adder (input [31:0] a, b, output [31:0] y);
 		assign y=a + b;
 endmodule
 
-module sl2 (input [31:0] a,
-	output [31:0] y);
+module sl2 (input [31:0] a, output [31:0] y);
 	// shift left by 2
 	assign y = {a[29:01], 2'b00};
 endmodule
 
 
-module signext (input [15:0] a,output [31:0] y);
+module signext (input [15:0] a, output [31:0] y);
 	assign y={{16{a[15]}}, a};
 endmodule
 
@@ -198,7 +198,6 @@ module flopr # (parameter WIDTH = 8)(input clk, reset,input [WIDTH-1:0] d,output
 endmodule
 
 
-
 module mux2 # (parameter WIDTH = 8)(input [WIDTH-1:0] d0, d1,input s,output [WIDTH-1:0] y);
 	assign y = s ? d1 : d0;
 endmodule
@@ -206,27 +205,16 @@ endmodule
 
 
 
-
-
-
-
-
-
-
-
-
-
+//alu: no change
 module alu(i_data_A, i_data_B, i_alu_control,o_result,o_zero_flag);
 
 input [31:0] i_data_A;					// A operand 
 input [31:0] i_data_B;					// B operand
-output reg [31:0] o_result;			// ALU result
+output reg [31:0] o_result;		        	 // ALU result
 input [2:0] i_alu_control;				// Control signal
 
 output wire o_zero_flag;				// Zero flag 
 assign o_zero_flag = ~|o_result;
-
-
 
 
 always @(*) begin
@@ -266,5 +254,4 @@ always @(*) begin
 			end
 	endcase
 end
-
 endmodule
