@@ -6,13 +6,14 @@
 
 	
 //top module: no change
-module SingleCycleV1(input clk, reset,output [31:0] writedata, dataadr,output memwrite);
+module SingleCycleV1 (input clk, reset,output [31:0] writedata, dataadr,output memwrite);
 	wire[31:0] pc,instr, readdata;
 	// instantiate processor and memories
 	mips mips (clk, reset, pc, instr, memwrite, dataadr,writedata, readdata);
 	imem imem (pc[7:2], instr);
 	dmem dmem (clk, memwrite, dataadr, writedata,readdata);
 endmodule
+
 
 //dmem: no change
 module dmem (input clk, we,input [31:0] a, wd,output [31:0] rd);
@@ -35,8 +36,9 @@ module imem (input [5:0] a,output [31:0] rd);
 	assign rd = RAM[a]; // word aligned
 endmodule
 
+
 //mips: control signal for jr added between modules
-module  mips(input clk, reset,
+module  mips (input clk, reset,
 				output [31:0] pc,
 				input [31:0] instr,	
 				output memwrite,
@@ -44,12 +46,13 @@ module  mips(input clk, reset,
 				input [31:0] readdata);
 	
 	wire memtoreg, branch,
-	alusrc, regdst, regwrite, jump, jr;//jr
+	alusrc, regdst, regwrite, jump, jr;   //jr
 	wire [2:0] alucontrol;
 	controller c(instr[31:26], instr[5:0], zero,memtoreg, memwrite, pcsrc,alusrc, regdst, regwrite, jump,jr, alucontrol);//jr
 	datapath dp(clk, reset, memtoreg, pcsrc,alusrc, regdst, regwrite, jump,jr,alucontrol,zero, pc, instr,aluout, writedata, readdata);//jr
 
 endmodule
+
 
 //controller: jr,funct
 module controller (input [5:0] op, funct,
@@ -58,15 +61,16 @@ module controller (input [5:0] op, funct,
 						output pcsrc, alusrc,
 						output regdst, regwrite,
 						output jump,
-						output jr,//jr
+						output jr,       //jr
 						output [2:0] alucontrol);
 						
 	wire [1:0] aluop;
 	wire branch;
 	maindec md (op,funct, memtoreg, memwrite, branch,alusrc, regdst, regwrite, jump,jr,aluop);
-	aludec ad (op,funct, aluop, alucontrol);
+	aludec ad (funct, aluop, alucontrol);
 	assign pcsrc = branch & zero;
 endmodule
+
 
 //maindec: jr, funct, case
 module maindec(input [5:0] op,funct,//jr
@@ -89,9 +93,6 @@ module maindec(input [5:0] op,funct,//jr
 			6'b101011: 	controls <=10'b0010100000; //SW
 			6'b000100: 	controls <=10'b0001000001; //BEQ
 			6'b001000: 	controls <=10'b1010000000; //ADDI
-			6'b001100: 	controls <=10'b1010000000; //ANDI
-			6'b001101: 	controls <=10'b1010000000; //ORI
-			6'b001110: 	controls <=10'b1010000000; //XORI
 			6'b000010: 	controls <=10'b0000001000; //J
 			default: 	controls  <=10'bxxxxxxxxx; //???
 		endcase
@@ -99,16 +100,12 @@ endmodule
 
 	
 //aludec: no change
-module aludec (input [5:0] op, input [5:0] funct,
+module aludec (input [5:0] funct,
 					input [1:0] aluop,
 					output reg [2:0] alucontrol);
 					
 	always @ (*)
-		case (op) 
-		6'b001100:	alucontrol <= 3'b000; // ANDI
-		6'b001101:	alucontrol <= 3'b001; // ORI
-		6'b001110:	alucontrol <= 3'b011; // XORI
-		default: case (aluop)
+		case (aluop)
 			2'b00: alucontrol <= 3'b010; // add
 			2'b01: alucontrol <= 3'b110; // sub
 			default: case(funct) // RTYPE
@@ -120,11 +117,7 @@ module aludec (input [5:0] op, input [5:0] funct,
 				default: alucontrol <= 3'bxxx; // ???
 			endcase
 		endcase
-	endcase
 endmodule
-
-
-
 
 
 //datapath: change
@@ -167,7 +160,6 @@ module datapath (input clk, reset,
 endmodule
 
 
-
 //regfile: no changes
 module regfile (input clk,
 					input we3,
@@ -187,23 +179,19 @@ module regfile (input clk,
 endmodule
 
 
-
 //supplementary modules: no changes
-module adder (input [31:0] a, b,output [31:0] y);
+module adder (input [31:0] a, b, output [31:0] y);
 		assign y=a + b;
 endmodule
 
-module sl2 (input [31:0] a,
-	output [31:0] y);
+module sl2 (input [31:0] a, output [31:0] y);
 	// shift left by 2
 	assign y = {a[29:01], 2'b00};
 endmodule
 
-
-module signext (input [15:0] a,output [31:0] y);
+module signext (input [15:0] a, output [31:0] y);
 	assign y={{16{a[15]}}, a};
 endmodule
-
 
 module flopr # (parameter WIDTH = 8)(input clk, reset,input [WIDTH-1:0] d,output reg [WIDTH-1:0] q);
 	always @ (posedge clk, posedge reset)
@@ -211,19 +199,9 @@ module flopr # (parameter WIDTH = 8)(input clk, reset,input [WIDTH-1:0] d,output
 		else q <= d;
 endmodule
 
-
-
 module mux2 # (parameter WIDTH = 8)(input [WIDTH-1:0] d0, d1,input s,output [WIDTH-1:0] y);
 	assign y = s ? d1 : d0;
 endmodule
-
-
-
-
-
-
-
-
 
 
 
@@ -239,8 +217,6 @@ input [2:0] i_alu_control;				// Control signal
 
 output wire o_zero_flag;				// Zero flag 
 assign o_zero_flag = ~|o_result;
-
-
 
 
 always @(*) begin
@@ -280,5 +256,4 @@ always @(*) begin
 			end
 	endcase
 end
-
 endmodule
