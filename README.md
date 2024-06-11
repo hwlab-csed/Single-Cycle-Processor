@@ -4,7 +4,7 @@
 
 
 ## Single Cycle Code: 
-[Main Code](Sample%20Codes/SingleCycleV1.v)
+[Main Code](Sample%20Codes/SingleCycle.v)
 
 ## Testbenches for Instructions: 
 The best way to check if the single cycle code correctly implements an instruction is to update the instruction memory (ie. machine code) to use that particular operation before storing the result at a particular location in the data memory. Then, we use the testbench to cross-check the value stored at that address with the expected result of the instruction. If they match, the instruction has executed properly and the program will print 'Simulation succeeded'.
