@@ -1,4 +1,4 @@
-# Sample Modification Question 1 - jr
+# Sample Modification Question 2 - jr
 ## Question
 Modify the [already given code](../../Sample%20Codes/SingleCycle.v) of the 32 bits single cycle MIPS processor to include jr instruction according to the following conventions:
 
