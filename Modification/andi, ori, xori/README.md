@@ -1,4 +1,4 @@
-# Sample Modification Question 2 - ANDI, ORI, XORI
+# Sample Modification Question 1 - andi, ori, xori
 ## Question
 Modify the [given code](../../Sample%20Codes/SingleCycle.v) to implement andi, xori, ori in the microprocessor and run the following sample instructions to check it.
 
