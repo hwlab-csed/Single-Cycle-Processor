@@ -26,5 +26,5 @@ The best way to check if the single cycle code correctly implements an instructi
 2. Modify the given Single Cycle Processor code to include the ANDI, ORI and XORI instructions.
    - [Link to Question & Solution](Modification/andi%2C%20ori%2C%20xori/README.md)
 
-## Sample Assignment Question:
-- [Link to Question](Assignment3/Question.md)
+## Sample Assignment Questions:
+- [Link to Questions](Assignment3/Questions.md)
