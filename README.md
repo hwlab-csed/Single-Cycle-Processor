@@ -18,7 +18,7 @@ The best way to check if the single cycle code correctly implements an instructi
 - [Video Explanation](https://www.youtube.com/watch?v=_pPCv_fkO1w)
 
 ## Modification Questions:
-1. Modify the given Single Cycle Processor code to include the ANDI, ORI and XORI instructions.
+1. Modify the given Single Cycle Processor code to include the Andi, Ori and Xori instructions.
    - [Link to Question & Solution](Modification/andi%2C%20ori%2C%20xori/README.md)
 
 2. Modify the given Single Cycle Processor code to include the Jr (Jump Register) instruction.
