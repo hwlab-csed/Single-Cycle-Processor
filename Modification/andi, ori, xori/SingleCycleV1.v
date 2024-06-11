@@ -1,13 +1,9 @@
-//R-Type Instruction: jr $s
-//we'll be calculating the new pc from the given register
+`define ALULEN  31
+//`include "memfile.dat"
 
-//convention followed, this is not rigid:
-	//one extra control signal for jr to signal when the jr instruction is made
-
-	
 //top module: no change
 module SingleCycleV1 (input clk, reset,output [31:0] writedata, dataadr,output memwrite);
-	wire[31:0] pc,instr, readdata;
+	wire [31:0] pc, instr, readdata;
 	// instantiate processor and memories
 	mips mips (clk, reset, pc, instr, memwrite, dataadr,writedata, readdata);
 	imem imem (pc[7:2], instr);
@@ -25,20 +21,20 @@ module dmem (input clk, we,input [31:0] a, wd,output [31:0] rd);
 endmodule
 
 
-//imem: change file path appropriately
+//imem: change to the appropriate file directory
 module imem (input [5:0] a,output [31:0] rd);
 	reg [31:0] RAM[63:0];
 	integer i;
 	initial
 		begin
-			$readmemh ("D:/SingleCycleV1/memfile.dat",RAM);
+			$readmemh ("D:/Verilog/memfile1.dat",RAM);
 		end
 	assign rd = RAM[a]; // word aligned
 endmodule
 
 
-//mips: control signal for jr added between modules
-module  mips (input clk, reset,
+//mips: no change
+module  mips(input clk, reset,
 				output [31:0] pc,
 				input [31:0] instr,	
 				output memwrite,
@@ -46,66 +42,67 @@ module  mips (input clk, reset,
 				input [31:0] readdata);
 	
 	wire memtoreg, branch,
-	alusrc, regdst, regwrite, jump, jr;   //jr
+	alusrc, regdst, regwrite, jump;
 	wire [2:0] alucontrol;
-	controller c(instr[31:26], instr[5:0], zero,memtoreg, memwrite, pcsrc,alusrc, regdst, regwrite, jump,jr, alucontrol);//jr
-	datapath dp(clk, reset, memtoreg, pcsrc,alusrc, regdst, regwrite, jump,jr,alucontrol,zero, pc, instr,aluout, writedata, readdata);//jr
+	controller c(instr[31:26], instr[5:0], zero,memtoreg, memwrite, pcsrc,alusrc, regdst, regwrite, jump,alucontrol);
+	datapath dp(clk, reset, memtoreg, pcsrc,alusrc, regdst, regwrite, jump,alucontrol,zero, pc, instr,aluout, writedata, readdata);
 
 endmodule
 
-
-//controller: jr,funct
+//controller: op to be included as input for aludec
 module controller (input [5:0] op, funct,
 						input zero,
 						output memtoreg, memwrite,
 						output pcsrc, alusrc,
 						output regdst, regwrite,
 						output jump,
-						output jr,       //jr
 						output [2:0] alucontrol);
 						
 	wire [1:0] aluop;
 	wire branch;
-	maindec md (op,funct, memtoreg, memwrite, branch,alusrc, regdst, regwrite, jump,jr,aluop);
-	aludec ad (funct, aluop, alucontrol);
+	maindec md (op, memtoreg, memwrite, branch,alusrc, regdst, regwrite, jump,aluop);
+	aludec ad (op,funct, aluop, alucontrol);
 	assign pcsrc = branch & zero;
 endmodule
 
 
-//maindec: jr, funct, case
-module maindec(input [5:0] op,funct,//jr
+//maindec: add the cases for andi, ori and xori based on their codes
+module maindec(input [5:0] op,
 				output memtoreg, memwrite,
 				output branch, alusrc,
 				output regdst, regwrite,
 				output jump,
-				output jr,//jr
 				output [1:0] aluop);
 				
-	reg [9:0] controls;
-	assign {regwrite, regdst, alusrc,branch, memwrite,memtoreg, jump, jr,aluop} = controls;
+	reg [8:0] controls;
+	assign {regwrite, regdst, alusrc,branch, memwrite,memtoreg, jump, aluop} = controls;
 	always @ (*)
 		case(op)
-			6'b000000: 	case(funct)
-								6'b001000: 	controls <=10'b0000000100; //JR
-								default:		controls <=10'b1100000010; //Other Rtype
-							endcase
-			6'b100011: 	controls <=10'b1010010000; //LW
-			6'b101011: 	controls <=10'b0010100000; //SW
-			6'b000100: 	controls <=10'b0001000001; //BEQ
-			6'b001000: 	controls <=10'b1010000000; //ADDI
-			6'b000010: 	controls <=10'b0000001000; //J
-			default: 	controls  <=10'bxxxxxxxxx; //???
+			6'b000000: controls <= 9'b110000010; //Rtyp
+			6'b100011: controls <=9'b101001000; //LW
+			6'b101011: controls <=9'b001010000; //SW
+			6'b000100: controls <=9'b000100001; //BEQ
+			6'b001000: controls <=9'b101000000; //ADDI
+			6'b001100: controls <=9'b101000000; //ANDI
+			6'b001101: controls <=9'b101000000; //ORI
+			6'b001110: controls <=9'b101000000; //XORI
+			6'b000010: controls <=9'b000000100; //J
+			default: controls  <=9'bxxxxxxxxx; //???
 		endcase
 endmodule
 
 	
-//aludec: no change
-module aludec (input [5:0] funct,
+//aludec: opcode to be included as input for the I-type instructions
+module aludec (input [5:0] op, input [5:0] funct,
 					input [1:0] aluop,
 					output reg [2:0] alucontrol);
 					
 	always @ (*)
-		case (aluop)
+		case (op) 
+		6'b001100:	alucontrol <= 3'b000; // ANDI
+		6'b001101:	alucontrol <= 3'b001; // ORI
+		6'b001110:	alucontrol <= 3'b011; // XORI
+		default: case (aluop)
 			2'b00: alucontrol <= 3'b010; // add
 			2'b01: alucontrol <= 3'b110; // sub
 			default: case(funct) // RTYPE
@@ -117,15 +114,15 @@ module aludec (input [5:0] funct,
 				default: alucontrol <= 3'bxxx; // ???
 			endcase
 		endcase
+	endcase
 endmodule
 
 
-//datapath: change
+//datapath: no change
 module datapath (input clk, reset,
 						input memtoreg, pcsrc,
 						input alusrc, regdst,
 						input regwrite, jump,
-						input jr,
 						input [2:0] alucontrol,
 						output zero,
 						output [31:0] pc,
@@ -134,7 +131,7 @@ module datapath (input clk, reset,
 						input [31:0] readdata);
 							
 	wire [4:0] writereg;
-	wire [31:0] pcnext, pcnextbr, pcplus4, pcbranch, pcnextj;
+	wire [31:0] pcnext, pcnextbr, pcplus4, pcbranch;
 	wire [31:0] signimm, signimmsh;
 	wire [31:0] srca, srcb;
 	wire [31:0] result;
@@ -145,8 +142,7 @@ module datapath (input clk, reset,
 	sl2 immsh(signimm, signimmsh);
 	adder pcadd2(pcplus4, signimmsh, pcbranch);
 	mux2 #(32) pcbrmux(pcplus4, pcbranch, pcsrc,pcnextbr);
-	mux2 #(32) pcmux(pcnextbr, {pcplus4[31:28],instr[25:0], 2'b00},jump, pcnextj);
-	mux2 #(32) pcmuxjr(pcnextj, srca, jr, pcnext); // jr
+	mux2 #(32) pcmux(pcnextbr, {pcplus4[31:28],instr[25:0], 2'b00},jump, pcnext);
 	
 	// register file 
 	regfile rf(clk, regwrite, instr[25:21],instr[20:16], writereg,result, srca, writedata);
@@ -160,13 +156,13 @@ module datapath (input clk, reset,
 endmodule
 
 
-//regfile: no changes
+//reg file: no change
 module regfile (input clk,
 					input we3,
 					input [4:0] ra1, ra2, wa3,
 					input [31:0] wd3,
 					output [31:0] rd1, rd2);
-	reg [31:0] rf[31:0];
+					reg [31:0] rf[31:0];
 	// three ported register file
 	// read two ports combinationally
 	// write third port on rising edge of clock
@@ -189,15 +185,18 @@ module sl2 (input [31:0] a, output [31:0] y);
 	assign y = {a[29:01], 2'b00};
 endmodule
 
+
 module signext (input [15:0] a, output [31:0] y);
 	assign y={{16{a[15]}}, a};
 endmodule
+
 
 module flopr # (parameter WIDTH = 8)(input clk, reset,input [WIDTH-1:0] d,output reg [WIDTH-1:0] q);
 	always @ (posedge clk, posedge reset)
 		if (reset) q<=0;
 		else q <= d;
 endmodule
+
 
 module mux2 # (parameter WIDTH = 8)(input [WIDTH-1:0] d0, d1,input s,output [WIDTH-1:0] y);
 	assign y = s ? d1 : d0;
@@ -206,13 +205,12 @@ endmodule
 
 
 
-
-//ALU: no changes
+//alu: no change
 module alu(i_data_A, i_data_B, i_alu_control,o_result,o_zero_flag);
 
 input [31:0] i_data_A;					// A operand 
 input [31:0] i_data_B;					// B operand
-output reg [31:0] o_result;				// ALU result
+output reg [31:0] o_result;		        	 // ALU result
 input [2:0] i_alu_control;				// Control signal
 
 output wire o_zero_flag;				// Zero flag 

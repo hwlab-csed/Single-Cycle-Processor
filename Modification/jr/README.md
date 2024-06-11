@@ -1,6 +1,6 @@
-# Sample Modification Question 1 - jr
+# Sample Modification Question 2 - jr
 ## Question
-Modify the [already given code](../../Sample%20Codes/SingleCycleV1.v) of the 32 bits single cycle MIPS processor to include jr instruction according to the following conventions:
+Modify the [already given code](../../Sample%20Codes/SingleCycle.v) of the 32 bits single cycle MIPS processor to include jr instruction according to the following conventions:
 
 ![jr instruction format](image-1.png)
 > jr instruction format
@@ -74,7 +74,7 @@ module controller (input [5:0] op, funct,
 	wire [1:0] aluop;
 	wire branch;
 	maindec md (op,funct, memtoreg, memwrite, branch,alusrc, regdst, regwrite, jump,jr,aluop);
-	aludec ad (op,funct, aluop, alucontrol);
+	aludec ad (funct, aluop, alucontrol);
 	assign pcsrc = branch & zero;
 endmodule
 ```
@@ -102,9 +102,6 @@ module maindec(input [5:0] op,funct,
 		6'b101011: 	controls <=10'b0010100000; //SW
 		6'b000100: 	controls <=10'b0001000001; //BEQ
 		6'b001000: 	controls <=10'b1010000000; //ADDI
-		6'b001100: 	controls <=10'b1010000000; //ANDI
-		6'b001101: 	controls <=10'b1010000000; //ORI
-		6'b001110: 	controls <=10'b1010000000; //XORI
 		6'b000010: 	controls <=10'b0000001000; //J
 		default: 	controls  <=10'bxxxxxxxxx; //???
 	endcase

@@ -1,7 +1,13 @@
-//addi $2,$0,100   
-//sw   $2,30($0)  
-//lw   $3,30($0)   
-//sw   $3,20($0) 
+//addi $2,$0,100  //initialise $2=100
+//sw $2,30($0)    //write address 30=100
+//lw $3,30($0)    //$3=[30]=100
+//sw $3,20($0)    //write address 20=100
+
+// Machine code
+//  20020064
+//  ac02001e
+//  8c03001e
+//  ac030014
 
 module testbenchv1;
 	reg clk;
