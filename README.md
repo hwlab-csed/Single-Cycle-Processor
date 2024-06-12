@@ -28,4 +28,4 @@ The best way to check if the single cycle code correctly implements an instructi
 
 
 ## Sample Assignment Questions:
-- [Link to Questions](Sample Questions/Questions.md)
+- [Link to Questions](Sample%20Questions/Questions.md)
