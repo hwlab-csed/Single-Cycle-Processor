@@ -24,7 +24,8 @@ memfile.dat : [memfile.dat](memfile.dat)
 	
 ## Solution Explanation
 </summary>
-	
+
+### Video Explanation [Click here](https://www.youtube.com/watch?v=YdMKU0FelT4)
 ### Instruction
 - The Jump Register instruction causes the PC to jump to the contents stored in the first source register `rs`. 
 - It is an R-type instruction. 
