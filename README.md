@@ -1,6 +1,6 @@
 # Single Cycle Processor
 
-### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and 3 questions on the topic.
+### This repository contains one code for the Single Cycle Processor, subsequent testbenches to test each instruction individually and a few questions on the topic.
 
 
 ## Single Cycle Code: 
@@ -28,4 +28,4 @@ The best way to check if the single cycle code correctly implements an instructi
 
 
 ## Sample Assignment Questions:
-- [Link to Questions](Assignment3/Questions.md)
+- [Link to Questions](Sample%20Questions/Questions.md)
